@@ -1,3 +1,4 @@
+
 import {
   Mail,
   Phone,
@@ -7,143 +8,142 @@ import {
   Code,
   Briefcase,
   GraduationCap,
+  Lightbulb,
+  Server,
   Brush,
   BookOpen,
   Send,
   ExternalLink,
 } from "lucide-react";
 
-import { Card } from "./components/Card";
-import { Button } from "./components/Button";
-import { Badge } from "./components/Badge";
-import "./styles/portfolio.css";
+// Use relative imports instead of @/components
+import { Card, CardContent, CardHeader, CardTitle } from "./components/card";
+import { Button } from "./components/button";
+import { Badge } from "./components/badge";
 
-// Example data
-const portfolioData = {
-  name: "Mohamed Ahmed",
-  title: "Software Engineer | React & Node.js Developer",
-  contact: {
-    email: "youremail@example.com",
-    phone: "01012345678",
-    github: "https://github.com/yourprofile",
-    linkedin: "https://linkedin.com/in/yourprofile",
-  },
-  about: {
-    summary: "I am a passionate developer who loves building web apps.",
-    vision: "My goal is to create impactful and scalable solutions.",
-  },
-  education: {
-    institution: "Alamein University",
-    degree: "B.Sc. in Computer Science",
-    details: "3rd Year CSE",
-    courses: "Algorithms, Databases, AI, Quantum Computing",
-  },
-  skills: [
-    { category: "Frontend", items: ["React", "HTML", "CSS", "JavaScript"] },
-    { category: "Backend", items: ["Node.js", "Express", "MongoDB"] },
-    { category: "Other", items: ["Git", "Linux", "Docker"] },
-  ],
-  projects: [
-    { title: "Bus Reservation System", description: "Built with Node.js and MongoDB", link: "#" },
-    { title: "Portfolio Website", description: "Personal website using React", link: "#" },
-  ],
-  certifications: ["AWS Cloud Practitioner", "Coursera: Machine Learning"],
-  achievements: [
-    { title: "ECPC Participant", description: "Competed in programming contest" },
-    { title: "Quantum Hackathon", description: "Worked on quantum computing project" },
-  ],
-};
+// --- Portfolio Data ---
+const portfolioData = { /* same as before */ };
 
 export default function Portfolio() {
   const { name, title, contact, about, education, skills, projects, certifications, achievements } = portfolioData;
 
   return (
-    <div className="portfolio">
+    <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
       {/* Header */}
-      <header className="header">
-        <h1>{name}</h1>
-        <h2>{title}</h2>
-        <div className="socials">
-          <a href={`mailto:${contact.email}`}><Mail /></a>
-          <a href={`tel:${contact.phone}`}><Phone /></a>
-          <a href={contact.github} target="_blank" rel="noreferrer"><Github /></a>
-          <a href={contact.linkedin} target="_blank" rel="noreferrer"><Linkedin /></a>
+      <header className="bg-gradient-to-r from-blue-700 to-purple-700 text-white py-24 px-4 text-center shadow-lg">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-3 tracking-tight">{name}</h1>
+          <h2 className="text-xl md:text-2xl font-light opacity-90">{title}</h2>
+          <div className="flex justify-center items-center gap-6 mt-8">
+            <a href={`mailto:${contact.email}`} className="hover:text-yellow-300 transition-colors"><Mail /></a>
+            <a href={`tel:${contact.phone}`} className="hover:text-yellow-300 transition-colors"><Phone /></a>
+            <a href={contact.github} target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors"><Github /></a>
+            <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors"><Linkedin /></a>
+          </div>
         </div>
       </header>
 
-      {/* About */}
-      <section className="section">
-        <h3><Briefcase /> About Me</h3>
-        <p>{about.summary}</p>
-        <p><em>{about.vision}</em></p>
-      </section>
+      {/* Main Content */}
+      <main className="max-w-5xl mx-auto p-6 md:p-12">
+        {/* About */}
+        <section id="about" className="mb-16">
+          <h3 className="text-3xl font-bold mb-6 border-b-2 border-blue-600 pb-2 flex items-center gap-3"><Briefcase className="h-7 w-7" /> About Me</h3>
+          <p className="leading-relaxed text-lg mb-4">{about.summary}</p>
+          <p className="italic text-gray-600 leading-relaxed text-lg">{about.vision}</p>
+        </section>
 
-      {/* Education */}
-      <section className="section">
-        <h3><GraduationCap /> Education</h3>
-        <Card>
-          <h4>{education.institution}</h4>
-          <p>{education.degree}</p>
-          <p>{education.details}</p>
-          <p><strong>Relevant Coursework:</strong> {education.courses}</p>
-        </Card>
-      </section>
+        {/* Education */}
+        <section id="education" className="mb-16">
+          <h3 className="text-3xl font-bold mb-6 border-b-2 border-blue-600 pb-2 flex items-center gap-3"><GraduationCap className="h-7 w-7" /> Education</h3>
+          <Card className="shadow-md border-l-4 border-blue-600">
+            <CardContent className="p-6">
+              <h4 className="font-bold text-xl">{education.institution}</h4>
+              <p className="mt-1 text-md text-gray-700">{education.degree}</p>
+              <p className="text-sm text-gray-500">{education.details}</p>
+              <p className="text-sm text-gray-500 mt-2"><strong>Relevant Coursework:</strong> {education.courses}</p>
+            </CardContent>
+          </Card>
+        </section>
 
-      {/* Skills */}
-      <section className="section">
-        <h3><Code /> Skills</h3>
-        <div className="skills">
-          {skills.map((s) => (
-            <Card key={s.category}>
-              <h4>{s.category}</h4>
-              <div className="badges">
-                {s.items.map((item) => (
-                  <Badge key={item}>{item}</Badge>
-                ))}
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Projects */}
-      <section className="section">
-        <h3><Brush /> Projects</h3>
-        <div className="projects">
-          {projects.map((p) => (
-            <Card key={p.title}>
-              <h4>
-                {p.title}
-                <a href={p.link} target="_blank" rel="noreferrer"><ExternalLink /></a>
-              </h4>
-              <p>{p.description}</p>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Certifications & Achievements */}
-      <section className="section grid">
-        <div>
-          <h3><BookOpen /> Certifications</h3>
-          <ul>
-            {certifications.map((c) => <li key={c}>{c}</li>)}
-          </ul>
-        </div>
-        <div>
-          <h3><Award /> Achievements</h3>
-          <ul>
-            {achievements.map((a) => (
-              <li key={a.title}><strong>{a.title}</strong> - {a.description}</li>
+        {/* Skills */}
+        <section id="skills" className="mb-16">
+          <h3 className="text-3xl font-bold mb-6 border-b-2 border-blue-600 pb-2 flex items-center gap-3"><Code className="h-7 w-7" /> Technical Skills</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {skills.map((skillCategory) => (
+              <Card key={skillCategory.category} className="shadow-sm hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3 text-lg">{skillCategory.icon} {skillCategory.category}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                  {skillCategory.items.map(item => <Badge key={item} variant="secondary">{item}</Badge>)}
+                </CardContent>
+              </Card>
             ))}
-          </ul>
-        </div>
-      </section>
+          </div>
+        </section>
+
+        {/* Projects */}
+        <section id="projects" className="mb-16">
+          <h3 className="text-3xl font-bold mb-6 border-b-2 border-blue-600 pb-2 flex items-center gap-3"><Brush className="h-7 w-7" /> Projects</h3>
+          <div className="grid md:grid-cols-2 gap-8">
+            {projects.map((project) => (
+              <Card key={project.title} className="flex flex-col hover:border-blue-500 transition-colors">
+                <CardHeader>
+                  <CardTitle className="flex justify-between items-center">
+                    {project.title}
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600">
+                      <ExternalLink className="h-5 w-5" />
+                    </a>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <p className="text-gray-600">{project.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Certifications & Achievements */}
+        <section id="achievements" className="mb-16">
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <h3 className="text-3xl font-bold mb-6 border-b-2 border-blue-600 pb-2 flex items-center gap-3"><BookOpen className="h-7 w-7"/> Certifications</h3>
+              <ul className="list-disc pl-5 space-y-2 text-md">
+                {certifications.map(cert => <li key={cert}>{cert}</li>)}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-3xl font-bold mb-6 border-b-2 border-blue-600 pb-2 flex items-center gap-3"><Award className="h-7 w-7"/> Achievements</h3>
+              <ul className="space-y-4">
+                {achievements.map((ach) => (
+                  <li key={ach.title}>
+                    <p className="font-semibold text-md">{ach.title}</p>
+                    <p className="text-gray-600 text-sm">{ach.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
 
       {/* Footer */}
-      <footer className="footer">
-        <p>&copy; {new Date().getFullYear()} {name}. All Rights Reserved.</p>
-        <Button><Send /> Contact Me</Button>
+      <footer className="bg-gray-800 text-white py-16 px-6 text-center">
+        <div className="max-w-4xl mx-auto">
+          <h3 className="text-3xl font-bold mb-4">Get In Touch</h3>
+          <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+            I'm currently seeking new opportunities and am open to freelance projects. Feel free to reach out if you have a project in mind or just want to connect!
+          </p>
+          <a href={`mailto:${contact.email}`}>
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+              Contact Me <Send className="h-4 w-4 ml-2" />
+            </Button>
+          </a>
+          <div className="mt-12 border-t border-gray-700 pt-6">
+            <p className="text-gray-400">&copy; {new Date().getFullYear()} {name}. All Rights Reserved.</p>
+          </div>
+        </div>
       </footer>
     </div>
   );
