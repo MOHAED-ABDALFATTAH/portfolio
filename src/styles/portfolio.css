@@ -87,3 +87,38 @@
 .btn:hover {
   background: #1e40af;
 }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f9fafb;
+  color: #1f2937;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn {
+  background: #2563eb;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #1d4ed8;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+}

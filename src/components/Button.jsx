@@ -1,15 +1,6 @@
-export function Button({ children, onClick, className, size = "md" }) {
-  const sizes = {
-    sm: "px-3 py-1 text-sm",
-    md: "px-4 py-2",
-    lg: "px-5 py-3 text-lg",
-  };
-
+export function Button({ children, className, ...props }) {
   return (
-    <button
-      onClick={onClick}
-      className={`${sizes[size]} rounded-md font-medium transition-colors ${className || ""}`}
-    >
+    <button className={`btn ${className || ""}`} {...props}>
       {children}
     </button>
   );

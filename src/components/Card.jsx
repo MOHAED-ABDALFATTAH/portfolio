@@ -1,16 +1,12 @@
-
 export function Card({ children, className }) {
-  return <div className={`rounded-lg border p-4 ${className || ""}`}>{children}</div>;
+  return <div className={`card ${className || ""}`}>{children}</div>;
 }
-
-export function CardHeader({ children, className }) {
-  return <div className={`mb-2 font-semibold ${className || ""}`}>{children}</div>;
+export function CardHeader({ children }) {
+  return <div className="card-header">{children}</div>;
 }
-
-export function CardTitle({ children, className }) {
-  return <h2 className={`text-lg font-bold ${className || ""}`}>{children}</h2>;
+export function CardTitle({ children }) {
+  return <h4 className="card-title">{children}</h4>;
 }
-
 export function CardContent({ children, className }) {
-  return <div className={className || ""}>{children}</div>;
+  return <div className={`card-content ${className || ""}`}>{children}</div>;
 }
