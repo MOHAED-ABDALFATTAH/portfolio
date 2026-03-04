@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohamed Ahmed – Cybersecurity & Backend Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #0f1318;
+    --border: #1e2530;
+    --accent: #00ff9d;
+    --accent2: #0066ff;
+    --accent3: #ff3c5a;
+    --text: #e8edf5;
+    --muted: #6b7a8d;
+    --card: #111620;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    opacity: 0.5;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,157,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,157,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Noise texture */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  section, nav, footer { position: relative; z-index: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,12,16,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s ease forwards;
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s ease forwards;
+  }
+  .hero-name span { color: var(--accent); }
+
+  .hero-title {
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s ease forwards;
+  }
+
+  /* USP SECTION */
+  #usp {
+    padding: 5rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .usp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 2.5rem;
+  }
+
+  .usp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .usp-card:hover { border-color: var(--accent); }
+  .usp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .usp-card:hover::before { opacity: 1; }
+
+  .usp-lang {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .usp-lang::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--accent);
+  }
+
+  .usp-text-en {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    font-weight: 400;
+    color: var(--text);
+  }
+  .usp-text-en strong { color: var(--accent); font-weight: 700; }
+
+  .usp-card.arabic {
+    direction: rtl;
+    font-family: 'Noto Kufi Arabic', sans-serif;
+  }
+  .usp-card.arabic .usp-lang {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    flex-direction: row-reverse;
+  }
+  .usp-card.arabic .usp-lang::before { display: none; }
+  .usp-card.arabic .usp-lang::after {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--accent);
+  }
+
+  .usp-text-ar {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    font-size: 1.2rem;
+    line-height: 2;
+    color: var(--text);
+    direction: rtl;
+  }
+  .usp-text-ar strong { color: var(--accent); font-weight: 700; }
+
+  /* ABOUT / STATS */
+  #about {
+    padding: 5rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin-top: 3rem;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .stat {
+    background: var(--card);
+    padding: 2rem;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .stat:hover { background: #161c26; }
+
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* SKILLS */
+  #skills {
+    padding: 5rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .skill-block {
+    border: 1px solid var(--border);
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .skill-block:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent2);
+  }
+  .skill-block-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .skill-block-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.8rem;
+  }
+  .skill-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* EXPERIENCE */
+  #experience {
+    padding: 5rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .timeline {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 220px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-meta {
+    padding-right: 2rem;
+  }
+  .timeline-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .timeline-org {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .timeline-content { padding-left: 2rem; }
+  .timeline-role {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+  .timeline-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .timeline-bullets li {
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.6;
+  }
+  .timeline-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* PROJECTS */
+  #projects {
+    padding: 5rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .project-card {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+  .project-card::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+    transform-origin: bottom;
+  }
+  .project-card:hover::after { transform: scaleY(1); }
+
+  .project-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .project-tech {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+  .project-stat {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* CERTIFICATIONS */
+  #certifications {
+    padding: 5rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .cert-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin-top: 2.5rem;
+  }
+
+  .cert-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s;
+  }
+  .cert-item:hover { border-color: var(--accent2); }
+  .cert-name { font-size: 0.9rem; font-weight: 600; }
+  .cert-issuer {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent2);
+    letter-spacing: 0.1em;
+  }
+
+  /* CONTACT / FOOTER */
+  footer {
+    padding: 5rem 3rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .contact-links {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .contact-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .contact-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* Hero CTA */
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    font-weight: 700;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s ease forwards;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .hero-cta:hover { background: #00e88d; transform: translateX(4px); }
+  .hero-cta span { font-size: 1rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero, #usp, #about, #skills, #experience, #projects, #certifications, footer {
+      padding-left: 1.5rem; padding-right: 1.5rem;
+    }
+    .usp-grid, .skills-grid, .stats-row { grid-template-columns: 1fr; }
+    .timeline-item { grid-template-columns: 1fr; }
+    .timeline-item::before { display: none; }
+    .timeline-content { padding-left: 0; }
+    footer { flex-direction: column; gap: 2rem; align-items: flex-start; }
+    .project-card { grid-template-columns: 1fr; }
+  }
+
+  /* Scanline effect on hero */
+  #hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 100vh;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,255,157,0.01) 2px,
+      rgba(0,255,157,0.01) 4px
+    );
+    pointer-events: none;
+  }
+
+  .accent-line {
+    display: inline-block;
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: 1rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="nav-logo">MA_PORTFOLIO.EXE</div>
+  <ul class="nav-links">
+    <li><a href="#usp">USP</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">// Cybersecurity · Backend Engineering · Egypt</div>
+  <h1 class="hero-name">Mohamed<br><span>Ahmed</span></h1>
+  <p class="hero-title">Breaking systems to build better ones — Penetration Tester & Secure Backend Developer</p>
+  <a href="#usp" class="hero-cta">View Profile <span>↓</span></a>
+</section>
+
+<div class="divider"></div>
+
+<!-- USP STATEMENTS -->
+<section id="usp">
+  <div class="section-label reveal">// Unique Selling Proposition</div>
+  <h2 class="section-title reveal">What Sets Me Apart</h2>
+
+  <div class="usp-grid reveal">
+    <!-- English USP -->
+    <div class="usp-card">
+      <div class="usp-lang">English</div>
+      <p class="usp-text-en">
+        I am a <strong>cybersecurity-first engineer</strong> who bridges the gap between offensive security and backend development — a rare combination that lets me not just build systems, but <strong>think like an attacker</strong> while doing it. With hands-on experience in <strong>penetration testing, secure API architecture</strong>, and real-world vulnerability remediation, I don't just write code that works — I write code that <strong>holds up under attack</strong>. Whether it's engineering a JWT-secured REST API, hardening a web platform against OWASP Top 10 threats, or winning a robotics competition, I bring <strong>relentless curiosity, technical precision, and a security-first mindset</strong> to every challenge.
+      </p>
+    </div>
+
+    <!-- Arabic USP -->
+    <div class="usp-card arabic">
+      <div class="usp-lang">عربي</div>
+      <p class="usp-text-ar">
+        أنا <strong>مهندس برمجيات بعقلية أمنية</strong> أجمع بين اختبار الاختراق وتطوير الخوادم الخلفية — مزيج نادر يتيح لي بناء الأنظمة <strong>بعيون المهاجم</strong>. بفضل خبرة عملية في <strong>اختبار الاختراق وتصميم APIs الآمنة</strong> ومعالجة الثغرات الحقيقية، لا أكتب كودًا يعمل فحسب — بل أكتب كودًا <strong>يصمد أمام الهجمات</strong>. سواء أكان ذلك تطوير واجهة برمجية مؤمّنة بـ JWT، أو تحصين منصة ويب ضد تهديدات OWASP العشرة الأولى، أو الفوز بمسابقة روبوتيكس، أُقدّم في كل تحدٍّ <strong>فضولًا لا ينضب ودقةً تقنية وعقلية أمنية أولًا</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATS -->
+<section id="about">
+  <div class="section-label reveal">// At a Glance</div>
+  <h2 class="section-title reveal">By the Numbers</h2>
+  <div class="stats-row reveal">
+    <div class="stat">
+      <span class="stat-num">6+</span>
+      <div class="stat-label">Internships & Programs</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">40%</span>
+      <div class="stat-label">DB Query Optimization</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">95%</span>
+      <div class="stat-label">ML Training Score</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1st</span>
+      <div class="stat-label">Robotics Competition</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">// Technical Stack</div>
+  <h2 class="section-title reveal">Skills & Tools</h2>
+  <div class="skills-grid">
+    <div class="skill-block reveal">
+      <div class="skill-block-icon">🛡️</div>
+      <div class="skill-block-title">SECURITY</div>
+      <div class="skill-tags">
+        <span class="tag">Penetration Testing</span>
+        <span class="tag">OWASP</span>
+        <span class="tag">Vuln Assessment</span>
+        <span class="tag">SQL Injection Prevention</span>
+        <span class="tag">Kali Linux</span>
+        <span class="tag">Network Security</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-block-icon">⚙️</div>
+      <div class="skill-block-title">BACKEND</div>
+      <div class="skill-tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">Express.js</span>
+        <span class="tag">Laravel</span>
+        <span class="tag">REST APIs</span>
+        <span class="tag">JWT Auth</span>
+        <span class="tag">RBAC</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-block-icon">🗄️</div>
+      <div class="skill-block-title">DATABASES</div>
+      <div class="skill-tags">
+        <span class="tag">MySQL</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">Schema Design</span>
+        <span class="tag">3NF Normalization</span>
+        <span class="tag">Indexing</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-block-icon">💻</div>
+      <div class="skill-block-title">LANGUAGES</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">PHP</span>
+        <span class="tag">Java</span>
+        <span class="tag">C++</span>
+        <span class="tag">SQL</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-block-icon">🤖</div>
+      <div class="skill-block-title">AI / ML</div>
+      <div class="skill-tags">
+        <span class="tag">LLM Apps</span>
+        <span class="tag">RAG Systems</span>
+        <span class="tag">Scikit-learn</span>
+        <span class="tag">Prompt Engineering</span>
+        <span class="tag">Deep Learning</span>
+        <span class="tag">Regression</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-block-icon">🔧</div>
+      <div class="skill-block-title">TOOLS</div>
+      <div class="skill-tags">
+        <span class="tag">Git</span>
+        <span class="tag">GitHub</span>
+        <span class="tag">WordPress</span>
+        <span class="tag">HTTPS / TLS</span>
+        <span class="tag">Input Sanitization</span>
+        <span class="tag">Linux</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label reveal">// Career Timeline</div>
+  <h2 class="section-title reveal">Experience</h2>
+  <div class="timeline">
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-date">NOV 2025 → PRESENT</div>
+        <div class="timeline-org">DEPI, Cairo</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Vulnerability Analyst & Penetration Tester</div>
+        <ul class="timeline-bullets">
+          <li>Performed web and network security assessments identifying high-risk vulnerabilities</li>
+          <li>Documented findings and provided remediation strategies to stakeholders</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-date">SEP 2025</div>
+        <div class="timeline-org">NVIDIA DLI / ITI, Cairo</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Generative AI Trainee</div>
+        <ul class="timeline-bullets">
+          <li>Completed intensive program in LLM application development and prompt engineering</li>
+          <li>Built RAG-based systems and LLM pipelines using Python</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-date">SEP 2025</div>
+        <div class="timeline-org">NTI, Cairo</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Machine Learning Intern</div>
+        <ul class="timeline-bullets">
+          <li>Achieved 95% score; implemented supervised models with >90% accuracy using Scikit-learn</li>
+          <li>Explored quantum-inspired optimization algorithms for classical ML problems</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-date">JUL – AUG 2025</div>
+        <div class="timeline-org">Backend Training</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Backend Developer – Doctor Reservation System</div>
+        <ul class="timeline-bullets">
+          <li>Built secure RESTful APIs using Laravel with authentication and role-based access control</li>
+          <li>Implemented input validation and SQL injection mitigation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-date">JAN – OCT 2025</div>
+        <div class="timeline-org">IEEE E-JUST Branch</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Webmaster</div>
+        <ul class="timeline-bullets">
+          <li>Led development and security hardening of the official IEEE website</li>
+          <li>Implemented HTTPS, sanitization, and encryption across the platform</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-meta">
+        <div class="timeline-date">AUG – SEP 2024</div>
+        <div class="timeline-org">Alexandria Business Association</div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-role">Web Development Intern</div>
+        <ul class="timeline-bullets">
+          <li>Built full-stack Car Rental System with secure auth and 3NF database design</li>
+          <li>Implemented SQL injection prevention and admin CRUD dashboard</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">// Featured Work</div>
+  <h2 class="section-title reveal">Projects</h2>
+
+  <div class="project-card reveal">
+    <div>
+      <div class="project-name">VIP Travel – Bus Reservation System</div>
+      <p class="project-desc">
+        Architected a secure, production-grade bus reservation platform with robust PostgreSQL schema, JWT-based authentication, role-based access control, and comprehensive protection against SQL injection. Optimized query performance through indexing and aggregation strategies.
+      </p>
+      <div class="project-tech">
+        <span class="tag">Node.js</span>
+        <span class="tag">Express.js</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">JWT</span>
+        <span class="tag">RBAC</span>
+        <span class="tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="project-stat">
+      40% faster<br>query response
+    </div>
+  </div>
+
+  <div class="project-card reveal">
+    <div>
+      <div class="project-name">Doctor Reservation System API</div>
+      <p class="project-desc">
+        Developed a secure RESTful backend for medical appointment management using Laravel. Implemented authentication, role-based access control, input validation, and SQL injection mitigation with optimized database operations.
+      </p>
+      <div class="project-tech">
+        <span class="tag">Laravel</span>
+        <span class="tag">PHP</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">REST API</span>
+        <span class="tag">Secure Auth</span>
+      </div>
+    </div>
+    <div class="project-stat">Secure<br>RBAC API</div>
+  </div>
+
+  <div class="project-card reveal">
+    <div>
+      <div class="project-name">Car Rental System</div>
+      <p class="project-desc">
+        Full-stack web application built during Alexandria Business Association internship. Features secure authentication, 3NF-normalized database, SQL injection prevention, and an admin dashboard with full CRUD functionality.
+      </p>
+      <div class="project-tech">
+        <span class="tag">Full-Stack</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">3NF Design</span>
+        <span class="tag">Auth</span>
+        <span class="tag">Admin Dashboard</span>
+      </div>
+    </div>
+    <div class="project-stat">3NF<br>Normalized DB</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label reveal">// Credentials</div>
+  <h2 class="section-title reveal">Certifications</h2>
+  <div class="cert-row reveal">
+    <div class="cert-item">
+      <div class="cert-name">Building LLM Applications</div>
+      <div class="cert-issuer">NVIDIA DLI</div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-name">Getting Started with Deep Learning</div>
+      <div class="cert-issuer">NVIDIA DLI</div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-name">Python Programming Basics</div>
+      <div class="cert-issuer">ITI</div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-name">Machine Learning Training</div>
+      <div class="cert-issuer">NTI — Score: 95%</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="section-label">// Get in Touch</div>
+    <h2 class="section-title" style="font-size:2rem;">Open for Opportunities</h2>
+    <div class="contact-links">
+      <a href="mailto:" class="contact-link">✉ Email</a>
+      <a href="#" class="contact-link">in LinkedIn</a>
+      <a href="#" class="contact-link">⌥ GitHub</a>
+      <a href="tel:+201012416300" class="contact-link">☏ +20 101 241 6300</a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 MOHAMED_AHMED.PORTFOLIO</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 5 + 'px';
+    cursor.style.top = my - 5 + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx - 18 + 'px';
+    ring.style.top = ry - 18 + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), 80);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Cursor grow on links
+  document.querySelectorAll('a, button, .skill-block, .project-card, .cert-item, .stat').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      ring.style.transform = 'scale(1.5)';
+      ring.style.opacity = '0.8';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+      ring.style.opacity = '0.5';
+    });
+  });
+</script>
+</body>
+</html>
